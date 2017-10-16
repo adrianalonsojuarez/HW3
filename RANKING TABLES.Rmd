@@ -1,0 +1,102 @@
+---
+title: "Ranking NBA teams"
+author: "ADRIAN"
+date: "13 de octubre de 2017"
+output: git_document
+---
+
+
+
+
+```{r setup, include=FALSE}
+
+#Start by ranking the teams according to salary, arranged in decreasing order. Use ggplot() to create a barchart (horizontally oriented)7
+
+library(dplyr)
+teams <- arrange(teams, desc(salaryy))
+
+library(ggplot2)
+ggplot(teams, aes(x=reorder(team,salaryy), salaryy)) +
+  geom_bar(stat='identity') +
+  coord_flip() + ggtitle("NBA Teams ranked by Total Salary") + stat_summary(fun.y = "mean") + geom_hline(yintercept = mean(teams$salaryy))
+
+
+ggplot(teams, aes(x=reorder(team,pointsa), pointsa)) +
+  geom_bar(stat='identity') +
+  coord_flip() + ggtitle("NBA Teams ranked by Total Points") + stat_summary(fun.y = "mean") + geom_hline(yintercept = mean(teams$pointsa))
+
+ggplot(teams, aes(x=reorder(team,efficiencya), efficiencya)) +
+  geom_bar(stat='identity') +
+  coord_flip() + ggtitle("NBA Teams ranked by Total Efficiency") + stat_summary(fun.y = "mean") + geom_hline(yintercept = mean(teams$efficiencya))
+
+prcomp(teams$points3a, scale. = TRUE)
+prcomp(teams$points2a, scale. = TRUE)
+prcomp(teams$free_throwsa, scale. = TRUE)
+prcomp(teams$off_reboundsa, scale. = TRUE)
+prcomp(teams$def_reboundsa, scale. = TRUE)
+prcomp(teams$assistsa, scale. = TRUE)
+prcomp(teams$stealsa, scale. = TRUE)
+prcomp(teams$blocksa, scale. = TRUE)
+prcomp(teams$turnoversa, scale. = TRUE)
+prcomp(teams$foulsa, scale. = TRUE)
+
+library(factoextra)
+
+teamslessdata <- data.frame(teams$team, teams$points3a, teams$points2a, teams$free_throwsa, teams$off_reboundsa, teams$def_reboundsa, teams$assistsa, teams$stealsa, teams$blocksa, teams$turnoversa, teams$foulsa)
+
+as.factor(teams$team)
+
+X <- data.frame(teams$points3a, teams$points2a, teams$free_throwsa, teams$off_reboundsa, teams$def_reboundsa, teams$assistsa, teams$stealsa, teams$blocksa, teams$turnoversa, teams$foulsa)
+
+summary(X)
+cor(X)
+ 
+pca <- prcomp(X, scale. = TRUE)
+summary(pca)
+loadings(pca)
+plot(pca)
+screeplot(pca, type = "line", main = "Screenplot")
+biplot(pca)
+
+s1 <- 100 * ((teams$pointsa - min(teams$pointsa)) / (max(teams$pointsa) - min(teams$pointsa)))
+
+
+ggplot(teamslessdata, aes(x=reorder(teams.team, s1), s1)) +
+  geom_bar(stat='identity') +
+  coord_flip() + ggtitle("NBA Teams ranked by scaled PCA") + stat_summary(fun.y = "mean") + geom_hline(yintercept = mean(s1))
+
+#Reflect on what was hard/easy, problems you solved, helpful tutorials you read, etc.
+#Was this your first time working on a project with such file structure? If yes, how do you feel about it?
+#Was this your first time using relative paths? If yes, can you tell why they are important for reproducibility purposes?
+#Was this your first time using an R script? If yes, what do you think about just writing
+code?
+#What things were hard, even though you saw them in class/lab?
+#What was easy(-ish) even though we haven’t done it in class/lab?
+#Did anyone help you completing the assignment? If so, who?
+#How much time did it take to complete this HW?
+#What was the most time consuming part?
+#Was there anything interesting?
+
+#iT IS MY FIRST TIME SO I FEEL A BIT UNCOMFORTABLE AS IT IS SOMETHING I DO NOT DOMINATE. IT WAS ALSO MY FIRST TIME USING RELATIVE PATHS AND I CONSIDR IT IS IMPORTANT AS IT ALLOWS TO ORGANIZE AND REPRODUCE BACK THE PROJECT STEP BY STEP. IT WAS MY FIRST TIME USING RSCRIPT BUT I FELT COMFORTABLE USING IT. IT WAS REALLY HARD TO ACHIEVE GROPUING VARIABLES BY TEAM AND DEVELOPING THE GGPLOTS. PCA WAS ALSO SOMETHING I STRUGGLED WITH. ANDY, THE GSI, HELPS ME TO COMPLETE THE ASSIGMENT AND I SPENT MANY HOURS (5-10) FOR COMPLETING THE HOMEWORKS. IT IS INTERESTING THAT EACH TIME THE OUTPUT IS MORE USEFUL FOR REAL LIFE APPLICATION. 
+
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

@@ -1,0 +1,22 @@
+---
+title: "hw03-ADRIAN-ALONSO.Rmd"
+author: "ADRIAN"
+date: "12 de octubre de 2017"
+output: github_document
+---
+
+```{r}
+#In this assignment you will focus on a hypothetical question: If you had to come up with a ranking system for the teams, how would you rank them?
+#All we have is the information about the players, and the goal is to find a ranking for the teams.
+
+read.csv(nba2017_roster)
+read.csv(nbs2017_stats)
+
+library("dplyr")
+
+stats = nba2017_stats
+
+$missed_fg = nba2017
+
+```
+
