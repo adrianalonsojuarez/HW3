@@ -1,7 +1,7 @@
-##title: short title
+##title: MAKE-TEAMS-TABLE
 
-#description: a short description of what the script is about
-#input(s): what are the inputs required by the script?
+#description: creating variables and merging data
+#input(s): what are the inputs created when tunning the script?
 #output(s): what are the outputs created when running the script?
 
 ``` {r}
